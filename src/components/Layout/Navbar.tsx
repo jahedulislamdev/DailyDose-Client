@@ -152,6 +152,7 @@ const Navbar = ({
                                 <div className="flex flex-col gap-6 p-4">
                                     <div className="flex flex-col gap-3">
                                         <ModeToggle />
+
                                         <Button asChild variant="outline">
                                             <Link href={auth.login.url}>
                                                 {auth.login.title}
