@@ -14,28 +14,30 @@ import {
     SidebarMenuSubItem,
     SidebarRail,
 } from "@/components/ui/sidebar";
+import { adminRoutes } from "@/Routes/adminRoutes";
+import { userRoutes } from "@/Routes/userRoutes";
+import { Route } from "@/types";
+import { Button } from "../ui/button";
 
-// This is sample data.
-const data = {
-    navMain: [
-        {
-            title: "Getting Started",
-            url: "/dashboard",
-            items: [
-                {
-                    title: "Analytics",
-                    url: "/dashboard/analytics",
-                },
-                {
-                    title: "Write New Blog",
-                    url: "/dashboard/write-new-blog",
-                },
-            ],
-        },
-    ],
-};
+export function AppSidebar({
+    user,
+    ...props
+}: {
+    user: { role: string } & React.ComponentProps<typeof Sidebar>;
+}) {
+    let routes: Route[] = [];
+    switch (user.role) {
+        case "admin":
+            routes = adminRoutes;
+            break;
+        case "user":
+            routes = userRoutes;
+            break;
+        default:
+            routes = [];
+            break;
+    }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar {...props}>
             <SidebarHeader>
@@ -60,12 +62,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarMenu>
-                        {data.navMain.map((item) => (
+                        {routes.map((item) => (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton asChild>
-                                    <a href={item.url} className="font-medium">
+                                    <p className="font-medium cursor-pointer">
                                         {item.title}
-                                    </a>
+                                    </p>
                                 </SidebarMenuButton>
                                 {item.items?.length ? (
                                     <SidebarMenuSub>
