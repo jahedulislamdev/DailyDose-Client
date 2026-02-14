@@ -1,9 +1,7 @@
 "use client";
 
 import { Menu } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-
 import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
@@ -55,9 +53,9 @@ interface Navbar1Props {
 const Navbar = ({
     logo = {
         url: "/",
-        src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+        src: "https://i.pinimg.com/736x/0f/f1/aa/0ff1aaf838df1a77c702071b5eb2eedf.jpg",
         alt: "logo",
-        title: "Next Blog",
+        title: "DailyDose",
     },
     menu = [
         { title: "Home", url: "/" },
@@ -75,14 +73,14 @@ const Navbar = ({
         },
     ],
     auth = {
-        login: { title: "Login", url: "/login" },
-        signup: { title: "Register", url: "/register" },
+        login: { title: "Login", url: "/signin" },
+        signup: { title: "Register", url: "/signup" },
     },
     className,
 }: Navbar1Props) => {
     return (
         <section className={cn("py-4 ", className)}>
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-12">
                 {/* Desktop Menu */}
                 <nav className="hidden items-center justify-between lg:flex">
                     <div className="flex items-center gap-6">

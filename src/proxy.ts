@@ -3,12 +3,12 @@ import { userService } from "./services/user.service";
 import { roles } from "./constants/roles";
 
 export const proxy = async (req: NextRequest) => {
-    console.log("Proxy request:", req.url);
+    // console.log("Proxy request:", req.url);
 
     let isAuthenticated = false;
     let isAdmin = false;
     const { data } = await userService.getSession();
-    console.log(data);
+    // console.log(data);
     const pathname = req.nextUrl.pathname;
 
     if (data) {
@@ -24,11 +24,12 @@ export const proxy = async (req: NextRequest) => {
     if (isAdmin && pathname.startsWith("/dashboard")) {
         return NextResponse.redirect(new URL("/admin-dashboard", req.url));
     }
-    // * user is authenticated and User (user can't visit admin dashboard)
-    if (!isAdmin && pathname.startsWith("admin-dashboard")) {
+    // * user is authenticated and User (user can't visit admin sdashboard)
+    if (!isAdmin && pathname.startsWith("/admin-dashboard")) {
         return NextResponse.redirect(new URL("/dashboard", req.url));
     }
 
+    // console.log("Pathname Form Proxy:", pathname);
     return NextResponse.next();
 };
 
