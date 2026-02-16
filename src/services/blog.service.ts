@@ -35,7 +35,16 @@ export const blogService = {
                 }
             }
         } catch (err) {
-            return { data: null, err: "Failed to Fetch Blogs" };
+            return { err: err };
+        }
+    },
+    getBlogById: async (id: string) => {
+        try {
+            const res = await fetch(`${app_url}/api/v1/posts/${id}`);
+            const data = res.json();
+            return data;
+        } catch (err) {
+            return { data: null, error: err };
         }
     },
 };
