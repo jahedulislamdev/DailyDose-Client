@@ -5,15 +5,9 @@ import Link from "next/link";
 
 export default async function Home() {
     // 1. Data Fetching (Server-side)
-    const blogs = await blogService.getBlogs(
-        {
-            isFeatured: false,
-            search: " ",
-        },
-        { cache: "no-store" },
-    );
+    const blogs = await blogService.getBlogs({}, { cache: "no-store" });
     const postData = blogs?.data?.allPost || [];
-    console.log(postData);
+    // console.log(postData);
 
     return (
         <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 px-12">

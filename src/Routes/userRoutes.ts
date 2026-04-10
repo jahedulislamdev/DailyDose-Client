@@ -12,6 +12,10 @@ export const userRoutes: Route[] = [
                 title: "your Blogs",
                 url: "/dashboard/your-blogs",
             },
+            {
+                title: "History",
+                url: "/dashboard/history",
+            },
         ],
     },
 ];

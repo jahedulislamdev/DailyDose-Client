@@ -1,13 +1,27 @@
 import { blogService } from "@/services/blog.service";
+import { BlogPost } from "@/types";
 import {
-    ArrowLeft,
     ChevronRight,
     MoreHorizontal,
-    Clock,
     BarChart3,
     CalendarDays,
 } from "lucide-react";
 import Link from "next/link";
+
+//
+export const dynamic = "auto";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+
+// if we select false then it will be show not found except for the generated static params.
+export const dynamicParams = true; // true | false
+
+// static page generation for the specified dynamic routes.
+export async function generateStaticParams() {
+    const { data } = await blogService.getBlogs();
+    return data?.allPost
+        ?.slice(0, 3)
+        ?.map((post: BlogPost) => ({ id: post.id }));
+}
 
 const BlogDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params;

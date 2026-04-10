@@ -6,8 +6,13 @@ interface BlogService {
     revalidate?: number;
 }
 interface GetBlogParams {
-    isFeatured: boolean;
-    search: string;
+    isFeatured?: boolean;
+    search?: string;
+}
+export interface CreateBlog {
+    title: string;
+    content: string;
+    tags: string[];
 }
 export const blogService = {
     getBlogs: async (params?: GetBlogParams, options?: BlogService) => {
@@ -27,6 +32,7 @@ export const blogService = {
             if (options?.revalidate) {
                 config.next = { revalidate: options.revalidate };
             }
+            config.next = { ...config.next, tags: ["blogservice"] };
             const res = await fetch(url.toString(), config);
             if (res.ok) {
                 const data = await res.json();
@@ -43,6 +49,27 @@ export const blogService = {
             const res = await fetch(`${app_url}/api/v1/posts/${id}`);
             const data = res.json();
             return data;
+        } catch (err) {
+            return { data: null, error: err };
+        }
+    },
+    createBlog: async (BlogData: CreateBlog) => {
+        try {
+            const res = await fetch(`${app_url}/api/v1/posts`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json ",
+                },
+                body: JSON.stringify(BlogData),
+            });
+            const data = await res.json();
+            if (data.error) {
+                return {
+                    data: null,
+                    error: { message: data.error || "post creation failed" },
+                };
+            }
+            return { data: data, error: null };
         } catch (err) {
             return { data: null, error: err };
         }
