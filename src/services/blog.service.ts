@@ -8,6 +8,8 @@ interface BlogService {
 interface GetBlogParams {
     isFeatured?: boolean;
     search?: string;
+    page?: string;
+    limit?: string;
 }
 export interface CreateBlog {
     title: string;

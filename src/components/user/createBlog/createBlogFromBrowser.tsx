@@ -15,6 +15,7 @@ import { Type, Hash, Send, Eye, PenLine } from "lucide-react";
 import { toast } from "sonner";
 import * as z from "zod";
 import { createBlog } from "@/actions/blog.actions";
+import { Textarea } from "@/components/ui/textarea";
 
 const blogSchema = z.object({
     title: z
@@ -50,14 +51,18 @@ export default function CreateBlogPage() {
             };
             try {
                 const res = await createBlog(blogData);
-                if (res.error) {
-                    toast.error((res.error as { message: string }).message, {
-                        id: toastId,
-                    });
+                console.log(res);
+
+                if (res.data.success === false) {
+                    return toast.error(
+                        res.data.message || "Failed to publish blog",
+                        { id: toastId },
+                    );
                 } else {
                     toast.success("Blog published successfully!", {
                         id: toastId,
                     });
+                    form.reset();
                 }
             } catch (err: any) {
                 toast.error(err.message, { id: toastId });
@@ -159,8 +164,7 @@ export default function CreateBlogPage() {
                                                     <FieldLabel>
                                                         Content
                                                     </FieldLabel>
-                                                    <Input
-                                                        type="text"
+                                                    <Textarea
                                                         id={field.name}
                                                         name={field.name}
                                                         value={
@@ -172,7 +176,7 @@ export default function CreateBlogPage() {
                                                             );
                                                         }}
                                                         placeholder="Enter blog content..."
-                                                    ></Input>
+                                                    />
                                                     {invalid && (
                                                         <FieldError
                                                             errors={
